@@ -12,7 +12,7 @@ import (
 	stdopentracing "github.com/opentracing/opentracing-go"
 	stdzipkin "github.com/openzipkin/zipkin-go"
 
-	"websmee/fintech/quotes/discovery/health/proto"
+	"github.com/websmee/ms/pkg/discovery/health/proto"
 )
 
 type grpcServer struct {
