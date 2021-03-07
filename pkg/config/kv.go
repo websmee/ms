@@ -10,6 +10,14 @@ type KV interface {
 	Get(key string) ([]byte, error)
 }
 
+type ErrorKeyNotFound struct {
+	Key string
+}
+
+func (r *ErrorKeyNotFound) Error() string {
+	return "Key not found: " + r.Key
+}
+
 type consulKV struct {
 	kv *api.KV
 }
@@ -32,6 +40,9 @@ func (r *consulKV) Get(key string) ([]byte, error) {
 	pair, _, err := r.kv.Get(key, nil)
 	if err != nil {
 		return nil, err
+	}
+	if pair == nil {
+		return nil, &ErrorKeyNotFound{Key: key}
 	}
 
 	return pair.Value, nil
